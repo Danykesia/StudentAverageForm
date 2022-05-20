@@ -1,17 +1,20 @@
 function studentsAverage() {
   const form = document.querySelector('.form');
-  const result = document.querySelector('.result')
+  const result = document.querySelector('.result');
+  const dataList = document.querySelector('.data-list');
+  const dataForm = document.querySelector('.data-form');
+  const btnBack = document.querySelector('.btn-back')
 
-  function eventForm(event) {
+  form.addEventListener('submit', function (event) {
     event.preventDefault();
-
-    const students = [];
 
     const name = document.querySelector('.name');
     const age = document.querySelector('.age');
     const course = document.querySelector('.course');
     const grade1 = document.querySelector('.grade1');
     const grade2 = document.querySelector('.grade2');
+
+    const students = [];
 
     students.push({
       name: name.value,
@@ -20,21 +23,21 @@ function studentsAverage() {
       grade1: grade1.value,
       grade2: grade2.value
     })
-
     console.log(students)
 
+    // Show Results
     const average = (Number(grade1.value) + Number(grade2.value)) / 2
 
-    result.innerHTML += `<p>Name: ${name.value}</p>`;
-    result.innerHTML += `<p>Age: ${age.value}</p>`;
-    result.innerHTML += `<p>Course: ${course.value}</p>`;
-    result.innerHTML += `<p>Average: ${average}</p>`
+    result.innerHTML += `<p><strong>Name:</strong> ${name.value}</p>`;
+    result.innerHTML += `<p><strong>Age:</strong> ${age.value}</p>`;
+    result.innerHTML += `<p><strong>Course:</strong> ${course.value}</p>`;
+    result.innerHTML += `<p><strong>Average:</strong> ${average}</p>`
 
     function averageResult() {
       if (average <= 6) {
-        result.innerHTML += `<p>Result: DISAPPROVED</p>`
+        result.innerHTML += `<div class="disapproved">DISAPPROVED</div>`
       } else {
-        result.innerHTML += `<p>Result: APPROVED</p>`
+        result.innerHTML += `<div class="approved">APPROVED</div>`
       }
     }
     averageResult();
@@ -45,9 +48,22 @@ function studentsAverage() {
       course.value = '';
       grade1.value = '';
       grade2.value = '';
+      dataForm.style.display = 'none';
     }
     clearFields();
-  }
-  form.addEventListener('submit', eventForm)
+
+    // Show Data List
+    dataList.style.display = 'block'
+  });
+
+  // Show Data Form & Hide Data List
+  btnBack.addEventListener('click', function () {
+    dataForm.style.display = 'block';
+    dataList.style.display = 'none';
+  })
 }
 studentsAverage()
+
+
+// Excluir dados anteriores
+// Validações para só enviar se os formulários estiverem preenchidos
